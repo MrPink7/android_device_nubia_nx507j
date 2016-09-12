@@ -104,9 +104,9 @@ PRODUCT_PACKAGES += \
     libcnefeatureconfig
 
 # Charger
-PRODUCT_PACKAGES += \
-    charger \
-    charger_res_images
+#PRODUCT_PACKAGES += \
+#    charger \
+#    charger_res_images
 
 # Display
 PRODUCT_PACKAGES += \
@@ -212,7 +212,6 @@ PRODUCT_COPY_FILES += \
 
 # Ramdisk
 PRODUCT_PACKAGES += \
-    init.rc \
     fstab.qcom \
     init.class_main.sh \
     init.mdm.sh \
@@ -224,7 +223,9 @@ PRODUCT_PACKAGES += \
     init.recovery.qcom.rc \
     init.qcom.sh \
     init.qcom.ssr.sh \
+    init.qcom.usb.rc \
     init.qcom.usb.sh \
+    init.qcom.power.rc \
     init.target.rc \
     init.trace.rc \
     ueventd.qcom.rc \
