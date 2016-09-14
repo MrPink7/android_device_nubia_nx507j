@@ -125,6 +125,10 @@ PRODUCT_PACKAGES += \
     libnl_2 \
     libbson
 
+# Browser
+PRODUCT_PACKAGES += \
+    Gello
+
 # Filesystem
 PRODUCT_PACKAGES += \
     make_ext4fs 
@@ -212,6 +216,7 @@ PRODUCT_COPY_FILES += \
 
 # Ramdisk
 PRODUCT_PACKAGES += \
+    init.rc \
     fstab.qcom \
     init.class_main.sh \
     init.mdm.sh \
@@ -223,9 +228,7 @@ PRODUCT_PACKAGES += \
     init.recovery.qcom.rc \
     init.qcom.sh \
     init.qcom.ssr.sh \
-    init.qcom.usb.rc \
     init.qcom.usb.sh \
-    init.qcom.power.rc \
     init.target.rc \
     init.trace.rc \
     ueventd.qcom.rc \
@@ -234,10 +237,6 @@ PRODUCT_PACKAGES += \
 # for nubia camera app
 PRODUCT_PACKAGES += \
     libnubia
-
-# Gello
-PRODUCT_PACKAGES += \
-    Gello
 
 # Thermal config
 PRODUCT_COPY_FILES += \

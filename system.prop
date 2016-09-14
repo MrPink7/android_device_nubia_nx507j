@@ -1,7 +1,7 @@
 #
 # system.prop for NX507J Z7 Mini
 #
-ro.vendor.extension_library=/vendor/lib/libqc-opt.so
+ro.vendor.extension_library=/vendor/lib/libqti-perfd-client.so
 
 persist.sys.usb.config=adb
 

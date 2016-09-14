@@ -245,13 +245,6 @@ esac
 
 case "$target" in
     "msm8974")
-        setprop sys.lucid.GameXtend.automode 0
-        setprop sys.lucid.GameXtend.state 0 
-        setprop sys.lucid.WebXtend.automode 0
-        setprop sys.lucid.WebXtend.state 0
-        setprop sys.lucid.NavXtend.automode 0
-        setprop sys.lucid.NavXtend.state 0
-        
         echo 4 > /sys/module/lpm_levels/enable_low_power/l2
         echo 1 > /sys/module/msm_pm/modes/cpu0/power_collapse/suspend_enabled
         echo 1 > /sys/module/msm_pm/modes/cpu1/power_collapse/suspend_enabled
@@ -274,6 +267,7 @@ case "$target" in
         echo 1 > /sys/module/msm_pm/modes/cpu2/retention/idle_enabled
         echo 1 > /sys/module/msm_pm/modes/cpu3/retention/idle_enabled
         echo 0 > /sys/module/msm_thermal/core_control/enabled
+        #echo Y > /sys/module/clock_krait_8974/parameters/boost
         echo 1 > /sys/devices/system/cpu/cpu1/online
         echo 1 > /sys/devices/system/cpu/cpu2/online
         echo 1 > /sys/devices/system/cpu/cpu3/online
@@ -520,12 +514,13 @@ case "$target" in
         start mpdecision
     ;;
     "msm8974")
+        rm /data/system/perfd/default_values
         start mpdecision
         echo 4096 > /sys/block/mmcblk0/bdi/read_ahead_kb
 	sysctl -w net.ipv4.tcp_congestion_control=westwood
     ;;
     "apq8084")
-        rm /data/system/default_values
+        rm /data/system/perfd/default_values
         start mpdecision
         echo 512 > /sys/block/mmcblk0/bdi/read_ahead_kb
         echo 512 > /sys/block/sda/bdi/read_ahead_kb

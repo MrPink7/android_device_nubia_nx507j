@@ -27,7 +27,6 @@
 
 import init.nubia.usb.rc
 import init.target.rc
-import init.qcom.power.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -40,8 +39,6 @@ on init
 
     # Set permissions for persist partition
     mkdir /persist 0771 system system
-
-    mkdir /persist/bluetooth 0770 bluetooth bluetooth
 
     mkdir /dev/bus 0755 root root
     mkdir /dev/bus/usb 0755 root root
@@ -97,6 +94,8 @@ on boot
     mkdir /dev/socket/netmgr 0750 radio radio
 
     #Create PERFD deamon related dirs
+    mkdir /data/misc/perfd 0755 root system
+    chmod 2755 /data/misc/perfd
     mkdir /data/system/perfd 0770 root system
     chmod 2770 /data/system/perfd
 
@@ -253,13 +252,9 @@ on boot
 	chown system system /sys/kernel/lcd_enhance/disptype
 	chmod 0666 /sys/kernel/lcd_enhance/disptype
 	
-        #Vibrator
-        chown system system /sys/class/timed_output/vibrator/vtg_level
-        chown system system /sys/class/timed_output/vibrator/vtg_max
-        chown system system /sys/class/timed_output/vibrator/vtg_min
-        chmod 0644 /sys/class/timed_output/vibrator/vtg_level
-        chmod 0644 /sys/class/timed_output/vibrator/vtg_max
-        chmod 0644 /sys/class/timed_output/vibrator/vtg_min
+	chown system system /sys/class/timed_output/vibrator/enable
+	chown system system /sys/class/timed_output/vibrator/vtg_level
+	chmod 0664 /sys/class/timed_output/vibrator/vtg_level
 
 	# gamma
 	chown root system  /sys/module/mdss_dsi_ctrl/kgamma_bn
@@ -422,10 +417,6 @@ on boot
     # connections on high-throughput links get dropped when
     # an ack packet comes out of order
     write /proc/sys/net/netfilter/nf_conntrack_tcp_be_liberal 1
-
-    # NFC local data and nfcee xml storage
-    # mkdir /data/nfc 0770 nfc nfc
-    # mkdir /data/nfc/param 0770 nfc nfc
 
     # Set the console loglevel to < KERN_INFO
     # Set the default message loglevel to KERN_INFO
@@ -612,8 +603,6 @@ service qcom-c_main-sh /system/bin/sh /init.class_main.sh
 on property:vold.decrypt=trigger_restart_framework
     start qcom-c_main-sh
     start config_bluetooth
-    start config_bt_addr
-
 
 on property:persist.env.fastdorm.enabled=true
     setprop persist.radio.data_no_toggle 1
@@ -650,12 +639,6 @@ service start_hci_filter /system/bin/wcnss_filter
     user bluetooth
     group bluetooth
     disabled
-
-service config_bt_addr /system/bin/btnvtool -O
-    class core
-    user bluetooth
-    group bluetooth radio
-    oneshot
 
 service config_bluetooth /system/bin/sh /system/etc/init.qcom.bt.sh "onboot"
     class core

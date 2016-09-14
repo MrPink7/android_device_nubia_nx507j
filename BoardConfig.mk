@@ -71,6 +71,7 @@ TARGET_KRAIT_BIONIC_BBTHRESH := 64
 TARGET_KRAIT_BIONIC_PLDSIZE := 64
 
 # Kernel
+KERNEL_TOOLCHAIN_PREFIX := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-cortex_a15-linux-gnueabihf-linaro_4.9/bin/arm-cortex_a15-linux-gnueabihf-
 BOARD_DTBTOOL_ARGS := --force-v2
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 ehci-hcd.park=3 androidboot.selinux=permissive
 BOARD_KERNEL_SEPARATED_DT := true
@@ -156,13 +157,8 @@ BOARD_HARDWARE_CLASS := \
     $(LOCAL_PATH)/cmhw \
     hardware/cyanogen/cmhw
 
-# QCNE
-BOARD_USES_QCNE := true
-TARGET_LDPRELOAD := libNimsWrap.so
-
-# Init msm8974
-TARGET_INIT_VENDOR_LIB := libinit_msm8974
-TARGET_RECOVERY_DEVICE_MODULES := libinit_msm8974
+# Encryption
+TARGET_HW_DISK_ENCRYPTION := true
 
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
@@ -170,7 +166,7 @@ TARGET_PROVIDES_LIBLIGHT := true
 # Charger
 BOARD_CHARGER_SHOW_PERCENTAGE := true
 BOARD_CHARGER_ENABLE_SUSPEND := true
-#BOARD_CHARGER_DISABLE_INIT_BLANK := true
+BOARD_CHARGER_DISABLE_INIT_BLANK := true
 BACKLIGHT_PATH := /sys/class/leds/lcd-backlight/brightness
 
 # Partitions
@@ -215,17 +211,10 @@ BOARD_HAS_NO_REAL_SDCARD := true
 TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
 endif
 
-#Disable memcpy_base.S optimization
-TARGET_CPU_MEMCPY_BASE_OPT_DISABLE := true
+# dex-preoptimization to speed up first boot sequence
+WITH_DEXPREOPT := false
 
-# Enable dexpreopt to speed boot time
-ifeq ($(HOST_OS),linux)
-  ifeq ($(call match-word-in-list,$(TARGET_BUILD_VARIANT),user),true)
-    ifeq ($(WITH_DEXPREOPT_BOOT_IMG_ONLY),)
-      WITH_DEXPREOPT_BOOT_IMG_ONLY := true
-    endif
-  endif
-endif
+SKIP_BOOT_JARS_CHECK := true
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
