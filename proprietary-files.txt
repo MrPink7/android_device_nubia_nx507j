@@ -562,7 +562,6 @@ vendor/lib/libqmi_encdec.so
 vendor/lib/libqomx_jpegdec.so
 vendor/lib/libqomx_jpegenc.so
 vendor/lib/libQSEEComAPI.so
-vendor/lib/libqc-opt.so
 vendor/lib/libqti-perfd-client.so
 vendor/lib/libquipc_os_api.so
 vendor/lib/libquipc_ulp_adapter.so
