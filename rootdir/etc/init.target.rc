@@ -129,7 +129,7 @@ service qosmgrd /system/bin/qosmgr /system/etc/qosmgr_rules.xml
    group system
    disabled
 
-service thermal-engine /system/bin/thermal-engine --config /system/etc/thermal-engine-8974.conf
+service thermal-engine /system/vendor/bin/thermal-engine --config /system/etc/thermal-engine-8974.conf
    class main
    user root
    socket thermal-send-client stream 0666 system system
@@ -157,6 +157,11 @@ service wcnss-service /system/bin/wcnss_service
     user system
     group system wifi radio
     oneshot
+
+service pfm /system/bin/pfm
+    class late_start
+    user system
+    group system drmrpc mount
 
 on charger
     trigger ffbm
