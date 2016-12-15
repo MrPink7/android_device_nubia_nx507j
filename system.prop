@@ -95,6 +95,7 @@ telephony.lteOnCdmaDevice=1
 
 #
 # System props for bluetooth
+ro.bluetooth.request.master=true
 # System prop to turn on hfp client
 bluetooth.hfp.client=1
 
